@@ -1,0 +1,67 @@
+version: 2
+
+models: 
+  - name: stg_customers
+    description: Staged customer data from our jaffle app
+    columns:
+      - name: customer_id
+        description: The primary key for customers
+        tests:
+            - unique
+            - not_null
+
+  - name: stg_payments
+    columns:
+      - name: payment_id
+        tests:
+            - unique
+            - not_null
+
+  - name: stg_orders
+    columns:
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: order_id
+        description: This is the primary key for orders
+        tests:
+          - unique
+          - not_null
+      - name: status
+        description: This tells you the current order status for each order. "{{doc('order_status')}}"
+        tests:
+          - accepted_values:
+              values: ['completed', 'shipped', 'returned', 'placed', 'return_pending']
+
+  - name: fct_orders
+    columns:
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['completed', 'shipped', 'returned', 'placed', 'return_pending']
+
+  - name: dim_customers
+    columns:
+      - name: customer_id
+        tests:
+            - unique
+            - not_null
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+          - relationships:
+              to: ref('fct_orders')
+              field: customer_id 
