@@ -1,0 +1,13 @@
+packages:
+  - package: fishtown-analytics/dbt_utils
+    version: 0.6.2
+  - package: fivetran/github
+    version: 0.1.2
+    # External github repo
+    #- package: https://github.com/fishertown-analytics/dbt-utils.git
+    #  version: master
+
+    # Local project any path relative from packages.yml
+    #- local: sub-project-local
+  - package: gitlabhq/snowflake_spend
+    version: 1.2.0
