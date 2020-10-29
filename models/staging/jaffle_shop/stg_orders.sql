@@ -1,4 +1,4 @@
-with orders as (
+--with orders as (
 
     select
         id as order_id,
@@ -6,5 +6,6 @@ with orders as (
         order_date,
         status
     from {{source ('jaffle_shop','orders')}}
-)
-select * from orders
+    {{limit_data_in_dev('order_date',1000)}}
+--)
+--select * from orders
