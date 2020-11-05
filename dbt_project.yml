@@ -38,6 +38,8 @@ models:
             +materialized: table
     staging:
         +materialized: view
+        stripe:
+              +materialized: table
     snowflake_spend:
         +enables: true
         +schema: spend
